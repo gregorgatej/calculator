@@ -1,0 +1,41 @@
+.container {
+    border: 1px solid black;
+    border-radius: 9px;
+    width: 279px;
+    height: 420px;
+    margin: 50px auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    padding: 10px 0;
+}
+
+.display {
+    border: 1px solid black;
+    border-radius: 9px;
+    width: 250px;
+    max-height: 59px;
+    flex: 1;
+    padding: 0 10px;
+    box-sizing: border-box;
+
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+
+}
+
+button {
+    width: 61.25px;
+    height: 55px;
+    border-radius: 9px;
+    margin: 5px;
+}
+
+.row {
+    display: flex;
+    justify-content: space-between;
+    width: 261px;
+}
+
