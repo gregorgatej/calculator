@@ -21,6 +21,7 @@ let result = null;
 // Set to true when dividing by zero
 let locked = false;
 let justCalculated = false;
+let decimal = false;
 
 function operate (operator, num1, num2) {
     num1 = Number(num1);
@@ -53,6 +54,8 @@ const nrBtn = document.querySelectorAll(".nr");
 const operatorBtn = document.querySelectorAll(".operator");
 const equalsBtn = document.querySelector(".equals");
 const allClearBtn = document.querySelector(".ac");
+const dotBtn = document.querySelector(".dot");
+const delBtn = document.querySelector(".del");
 
 nrBtn.forEach(btn => {
     btn.addEventListener("click", e => {
@@ -64,6 +67,23 @@ nrBtn.forEach(btn => {
         const selectedNumber = e.target.textContent;
         display.textContent += selectedNumber;
     });
+});
+
+dotBtn.addEventListener("click", e => {
+    if (locked || decimal) return;
+    if (justCalculated) {
+        display.textContent = "";
+        justCalculated = false;
+    }
+    const dot = e.target.textContent;
+    display.textContent += dot;
+    decimal = true;
+});
+
+delBtn.addEventListener("click", e => {
+    if (locked) return;
+    if (display.textContent.length === 0) return;
+    display.textContent = display.textContent.slice(0, -1);
 });
 
 operatorBtn.forEach(btn => {
@@ -80,6 +100,7 @@ operatorBtn.forEach(btn => {
         } else {
             num1 = display.textContent;
             display.textContent = "";
+            decimal = false;
             operator = e.target.textContent;
         }
     });
@@ -104,4 +125,5 @@ allClearBtn.addEventListener("click", e => {
     num2 = null;
     result = null;
     locked = false;
+    decimal = false;
 });
