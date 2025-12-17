@@ -26,16 +26,37 @@
 
 }
 
-button {
-    width: 61.25px;
-    height: 55px;
-    border-radius: 9px;
-    margin: 5px;
-}
-
 .row {
     display: flex;
     justify-content: space-between;
     width: 261px;
 }
 
+.divide-operator {
+    width: 61.25px;
+    height: 55px;
+    border-radius: 9px;
+    margin: 5px;
+}
+
+.row .ac,
+.row .del {
+    width: 92.875px;
+    height: 55px;
+    border-radius: 9px;
+    margin: 5px;
+}
+
+.row button {
+    width: 61.25px;
+    height: 55px;
+    border-radius: 9px;
+    margin: 5px;
+}
+
+.row .equals {
+    width: 132.50px;
+    height: 55px;
+    border-radius: 9px;
+    margin: 5px;
+}
