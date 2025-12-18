@@ -1,3 +1,21 @@
+const display = document.querySelector(".display");
+const value = display.querySelector(".value");
+const nrBtn = document.querySelectorAll(".nr");
+const operatorBtn = document.querySelectorAll(".operator");
+const equalsBtn = document.querySelector(".equals");
+const allClearBtn = document.querySelector(".ac");
+const dotBtn = document.querySelector(".dot");
+const delBtn = document.querySelector(".del");
+
+let num1 = null;
+let num2 = null;
+let operator = null;
+let result = null;
+// Set to true when dividing by zero
+let locked = false;
+let justCalculated = false;
+let decimal = false;
+
 function add(num1, num2) {
     return num1 + num2;
 }
@@ -14,15 +32,6 @@ function divide(num1, num2) {
     return num1 / num2;
 }
 
-let num1 = null;
-let num2 = null;
-let operator = null;
-let result = null;
-// Set to true when dividing by zero
-let locked = false;
-let justCalculated = false;
-let decimal = false;
-
 function operate (operator, num1, num2) {
     num1 = Number(num1);
     num2 = Number(num2);
@@ -35,7 +44,7 @@ function operate (operator, num1, num2) {
             return roundToOneDecimal(multiply(num1, num2));
         case '÷':
             if (num2 === 0) {
-                display.textContent = "Not allowed! Press AC to continue";
+                value.textContent = "Not allowed! Press AC to continue";
                 locked = true;
                 return null;
             }
@@ -49,57 +58,47 @@ function roundToOneDecimal(result) {
     return Math.round(result * 10) / 10;
 }
 
-const display = document.querySelector(".display");
-const nrBtn = document.querySelectorAll(".nr");
-const operatorBtn = document.querySelectorAll(".operator");
-const equalsBtn = document.querySelector(".equals");
-const allClearBtn = document.querySelector(".ac");
-const dotBtn = document.querySelector(".dot");
-const delBtn = document.querySelector(".del");
+function appendChar(char) {
+    if (locked) return;
+    if (justCalculated) {
+        value.textContent = "";
+        justCalculated = false;
+    }
+    value.textContent += char;
+}
 
 nrBtn.forEach(btn => {
     btn.addEventListener("click", e => {
-        if (locked) return;
-        if (justCalculated) {
-            display.textContent = "";
-            justCalculated = false;
-        }
-        const selectedNumber = e.target.textContent;
-        display.textContent += selectedNumber;
+        appendChar(e.target.textContent);
     });
 });
 
 dotBtn.addEventListener("click", e => {
-    if (locked || decimal) return;
-    if (justCalculated) {
-        display.textContent = "";
-        justCalculated = false;
-    }
-    const dot = e.target.textContent;
-    display.textContent += dot;
+    if (decimal) return;
+    appendChar(e.target.textContent);
     decimal = true;
 });
 
 delBtn.addEventListener("click", e => {
     if (locked) return;
-    if (display.textContent.length === 0) return;
-    display.textContent = display.textContent.slice(0, -1);
+    if (value.textContent.length === 0) return;
+    value.textContent = value.textContent.slice(0, -1);
 });
 
 operatorBtn.forEach(btn => {
     btn.addEventListener("click", e => {
-        if (locked || display.textContent === "") return;
+        if (locked || value.textContent === "") return;
         if (operator) {
-            num2 = display.textContent;
+            num2 = value.textContent;
             result = operate(operator, num1, num2);
             if (locked) return;
-            display.textContent = result;
+            value.textContent = result;
             num1 = result;
             operator = e.target.textContent;
             justCalculated = true;
         } else {
-            num1 = display.textContent;
-            display.textContent = "";
+            num1 = value.textContent;
+            value.textContent = "";
             decimal = false;
             operator = e.target.textContent;
         }
@@ -110,20 +109,33 @@ equalsBtn.addEventListener("click", e => {
     if (locked || num1 === null) {
         return;
     } else {
-        num2 = display.textContent;
+        num2 = value.textContent;
         result = operate(operator, num1, num2);
         if (locked) return;
-        display.textContent = result;
+        value.textContent = result;
         operator = null;
         justCalculated = true;
     }
 });
 
 allClearBtn.addEventListener("click", e => {
-    display.textContent = "";
+    value.textContent = "";
     num1 = null;
     num2 = null;
     result = null;
     locked = false;
     decimal = false;
+});
+
+document.addEventListener("keydown", e => {
+    if (e.key >= "0" && e.key <= "9") {
+        appendChar(e.key);
+    }
+    if (e.key === "." && !decimal) {
+        appendChar(".");
+        decimal = true;
+    }
+    if (e.key === "Backspace") {
+        value.textContent = value.textContent.slice(0, -1);
+    }
 });
