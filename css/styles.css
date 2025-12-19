@@ -1,3 +1,11 @@
+@font-face {
+    font-family: "Segment7Standard";
+    src: url("../fonts/Segment7Standard.otf") format("opentype");
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
 body {
     font-family: Arial, Helvetica, sans-serif;
     font-size: large;
@@ -11,7 +19,7 @@ button {
 
     box-shadow:
     0 3px 0 #000,                     
-    0 6px 8px rgba(0, 0, 0, 0.3),     
+    0 6px 8px rgba(0, 0, 0, 0.3),
     inset 0 1px 0 rgba(255, 255, 255, 0.5);
 
     cursor: pointer;
