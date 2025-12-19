@@ -44,7 +44,7 @@ function operate (operator, num1, num2) {
             return roundToOneDecimal(multiply(num1, num2));
         case '÷':
             if (num2 === 0) {
-                value.textContent = "Not allowed! Press AC to continue";
+                value.textContent = "ERR - PRESS AC";
                 locked = true;
                 return null;
             }
@@ -64,6 +64,7 @@ function appendChar(char) {
         value.textContent = "";
         justCalculated = false;
     }
+    if (value.textContent.length >= 12) return;
     value.textContent += char;
 }
 
